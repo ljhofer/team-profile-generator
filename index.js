@@ -6,6 +6,9 @@ const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 
+//Variable for card div area
+let mainDiv = document.getElementById("#main-div");
+
 
 // TODO: An array of manager questions
 const managerQuestions = [ 
@@ -160,8 +163,19 @@ function generateManagerHMTL(manager) {
     const managerEmail = manager.getEmail();
     const managerOfficeNumber = manager.getOfficeNumber();
 
-    let managerHTML = `
+    let managerHTML = ` 
+<div class="card text-white bg-dark mb-3 manager" style="max-width: 18rem;">
+    <h2 class="card-header">${managerName}</h2>
+        <h3 class="card-header">${managerRole}</h3>
+    <div class="card-body">
+    <h4 class="card-title">ID: ${managerId}</h4>
+    <h4 class="card-title"> <a href="mailto: ${managerEmail}">Email: ${managerEmail}</a></h4>
+    <h4 class="card-title">Office Number: ${managerOfficeNumber}</h4>
+    </div>
+</div>
 `
+    mainDiv.insertAdjacentHTML("beforeend", managerHTML);
+
 }
 
 // Generates template literal sting for any engineers
