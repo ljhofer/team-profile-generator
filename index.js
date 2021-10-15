@@ -6,22 +6,23 @@ const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 
+
 // TODO: An array of manager questions
 const managerQuestions = [ 
     {
         type: "input",
         message: "What is the team manager's name?",
-        name: "managerName"
+        name: "name"
     },
     {
         type: "input",
         message: "What is the team manager's ID number?",
-        name: "managerID"
+        name: "id"
     },
     {
         type: "input",
         message: "What is the team manager's email?",
-        name: "managerEmail"
+        name: "email"
     },
     {
         type: "input",
@@ -40,21 +41,21 @@ const engineerQuestions = [
     {
         type: "input",
         message: "What is the engineer's name?",
-        name: "engineerName"
+        name: "name"
     },
     {
         type: "input",
         message: "What is the engineer's ID number?",
-        name: "engineerID"
+        name: "id"
     },
     {
         type: "input",
-        message: "What is the team manager's email?",
-        name: "engineerEmail"
+        message: "What is the engineer's email?",
+        name: "email"
     },
     {
         type: "input",
-        message: "What is the team manager's office number?",
+        message: "What is the engineer's office number?",
         name: "engineerGitHub"
     },
     {
@@ -69,17 +70,17 @@ const internQuestions = [
     {
         type: "input",
         message: "What is the intern's name?",
-        name: "internName"
+        name: "name"
     },
     {
         type: "input",
         message: "What is the intern's ID number?",
-        name: "internID"
+        name: "id"
     },
     {
         type: "input",
         message: "What is the interns's email?",
-        name: "internEmail"
+        name: "email"
     },
     {
         type: "input",
@@ -96,20 +97,22 @@ const internQuestions = [
 ]
 
 
+// Prompts user with the initial question set for the manager and starts the app
 function askManagerQuestions() {
     inquirer
         .prompt(managerQuestions)
 
         .then(response => {
-            console.log(response);
-            const mangager = new Manager (response);
+            const manager = new Manager (response);
+            generateManagerHMTL(manager);
+
             if (response.role === "Engineer"){
                 askEngineerQuestions();
             }
             else if (response.role === "Intern"){
                 askInternQuestions();
             }
-            else return
+            else return          
         })
 }
 
@@ -118,8 +121,8 @@ function askEngineerQuestions() {
         .prompt(engineerQuestions)
 
         .then(response => {
-            console.log(response);
             const engineer = new Engineer (response);
+            //generateEngineerHTML(engineer);
             if (response.role === "Engineer"){
                 askEngineerQuestions();
             }
@@ -135,8 +138,8 @@ function askInternQuestions() {
         .prompt(engineerQuestions)
 
         .then(response => {
-            console.log(response);
             const intern = new Intern (response);
+            //generateInternHTML(intern);
             if (response.role === "Engineer"){
                 askEngineerQuestions();
             }
@@ -148,12 +151,16 @@ function askInternQuestions() {
 }
 
 
-
-
 // TODO: Function for generating template literal
-function generateHMTL(responses) {
+function generateManagerHMTL(manager) {
+    
+    const managerName = manager.getName();
+    const managerId = manager.getID();
+    const managerEmail = manager.getEmail();
+    const managerOfficeNumber = manager.getOfficeNumber();
 
-
+    let managerHTML = `
+`
 }
 
 
