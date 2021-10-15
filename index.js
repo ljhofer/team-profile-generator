@@ -122,7 +122,7 @@ function askEngineerQuestions() {
 
         .then(response => {
             const engineer = new Engineer (response);
-            //generateEngineerHTML(engineer);
+            generateEngineerHTML(engineer);
             if (response.role === "Engineer"){
                 askEngineerQuestions();
             }
@@ -139,7 +139,7 @@ function askInternQuestions() {
 
         .then(response => {
             const intern = new Intern (response);
-            //generateInternHTML(intern);
+            generateInternHTML(intern);
             if (response.role === "Engineer"){
                 askEngineerQuestions();
             }
@@ -151,10 +151,11 @@ function askInternQuestions() {
 }
 
 
-// TODO: Function for generating template literal
+// Generates template literal sting for the manager
 function generateManagerHMTL(manager) {
     
     const managerName = manager.getName();
+    const managerRole = manager.getRole();
     const managerId = manager.getID();
     const managerEmail = manager.getEmail();
     const managerOfficeNumber = manager.getOfficeNumber();
@@ -162,6 +163,34 @@ function generateManagerHMTL(manager) {
     let managerHTML = `
 `
 }
+
+// Generates template literal sting for any engineers
+function generateEngineerHTML(engineer) {
+    
+    const engineerName = engineer.getName();
+    const engineerRole = engineer.getRole();
+    const engineerId = engineer.getID();
+    const engineerEmail = engineer.getEmail();
+    const engineerGitHub = engineer.getGitHub();
+
+    let engineerHTML = `
+`
+}
+
+// Generates template literal sting for any engineers
+function generateInternHTML(intern) {
+    
+    const internName = intern.getName();
+    const internRole = intern.getRole();
+    const internId = intern.getID();
+    const internEmail = intern.getEmail();
+    const internSchool = intern.getSchool();
+
+    let internHTML = `
+`
+}
+
+
 
 
 // TODO: Function for writing responses to HTML
