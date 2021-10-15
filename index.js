@@ -6,8 +6,8 @@ const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 
-//Variable for card div area
-let mainDiv = document.getElementById("#main-div");
+// Template literal for writing the final HTML
+let finalHTML="";
 
 
 // TODO: An array of manager questions
@@ -58,7 +58,7 @@ const engineerQuestions = [
     },
     {
         type: "input",
-        message: "What is the engineer's office number?",
+        message: "What is the engineer's GitHub username?",
         name: "engineerGitHub"
     },
     {
@@ -88,7 +88,7 @@ const internQuestions = [
     {
         type: "input",
         message: "What is the intern's school name?",
-        name: "internSchoolName"
+        name: "internSchool"
     },
     {
         type: "list",
@@ -132,13 +132,13 @@ function askEngineerQuestions() {
             else if (response.role === "Intern"){
                 askInternQuestions();
             }
-            else return
+            else writeToHTML();
         })
 }
 
 function askInternQuestions() {
     inquirer
-        .prompt(engineerQuestions)
+        .prompt(internQuestions)
 
         .then(response => {
             const intern = new Intern (response);
@@ -149,7 +149,7 @@ function askInternQuestions() {
             else if (response.role === "Intern"){
                 askInternQuestions();
             }
-            else return
+            else writeToHTML();
         })
 }
 
@@ -163,19 +163,35 @@ function generateManagerHMTL(manager) {
     const managerEmail = manager.getEmail();
     const managerOfficeNumber = manager.getOfficeNumber();
 
-    let managerHTML = ` 
-<div class="card text-white bg-dark mb-3 manager" style="max-width: 18rem;">
-    <h2 class="card-header">${managerName}</h2>
-        <h3 class="card-header">${managerRole}</h3>
-    <div class="card-body">
-    <h4 class="card-title">ID: ${managerId}</h4>
-    <h4 class="card-title"> <a href="mailto: ${managerEmail}">Email: ${managerEmail}</a></h4>
-    <h4 class="card-title">Office Number: ${managerOfficeNumber}</h4>
-    </div>
-</div>
+    let managerHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Roster</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <h1>My team</h1>
+    </header>
+    
+    <main id="main-div">
+        <div class="card text-white bg-dark mb-3 manager" style="max-width: 18rem;">
+            <h2 class="card-header">${managerName}</h2>
+                <h3 class="card-header">${managerRole}</h3>
+            <div class="card-body">
+            <h4 class="card-title">ID: ${managerId}</h4>
+            <h4 class="card-title">Email: <a href="mailto:${managerEmail}">${managerEmail}</a></h4>
+            <h4 class="card-title">Office Number: ${managerOfficeNumber}</h4>
+            </div>
+        </div>
 `
-   
-
+        // Pushes managerHTML to final HTML
+        finalHTML += managerHTML;
 }
 
 // Generates template literal sting for any engineers
@@ -188,7 +204,17 @@ function generateEngineerHTML(engineer) {
     const engineerGitHub = engineer.getGitHub();
 
     let engineerHTML = `
+        <div class="card text-white bg-dark mb-3 engineer" style="max-width: 18rem;">
+            <h2 class="card-header">${engineerName}</h2>
+                <h3 class="card-header">${engineerRole}</h3>
+            <div class="card-body">
+            <h4 class="card-title">ID: ${engineerId}</h4>
+            <h4 class="card-title">Email: <a href="mailto:${engineerEmail}">${engineerEmail}</a></h4>
+            <h4 class="card-title">GitHub: <a href="http://github.com/${engineerGitHub}" target="_blank">${engineerGitHub}</a></h4>
+            </div>
+        </div>
 `
+    finalHTML += engineerHTML; 
 }
 
 // Generates template literal sting for any engineers
@@ -201,33 +227,35 @@ function generateInternHTML(intern) {
     const internSchool = intern.getSchool();
 
     let internHTML = `
+        <div class="card text-white bg-dark mb-3 intern" style="max-width: 18rem;">
+            <h2 class="card-header">${internName}</h2>
+                <h3 class="card-header">${internRole}</h3>
+            <div class="card-body">
+            <h4 class="card-title">ID: ${internId}</h4>
+            <h4 class="card-title">Email: <a href="mailto:${internEmail}">${internEmail}</a></h4>
+            <h4 class="card-title">School: ${internSchool}</h4>
+            </div>
+        </div>
 `
+    finalHTML += internHTML;
 }
 
-
-
-
 // TODO: Function for writing responses to HTML
-function writeToHTML(finalHTML) {
+function writeToHTML() {
 
+    let closingTags = `
+    </main>
+ 
+</body>
+</html>    
+    `
+    finalHTML += closingTags;
 
-
+    fs.writeFile("./dist/index.html", finalHTML, err =>
+        err ? console.error(err) : console.log("Success!"))
 }
 
 
 // TODO: Function to initialize app, calls questions, and gets responses
-function startApp() {
-    inquirer
-        .prompt(questions)
-        .then ((responses) => {
-            // Sends the responses to the generate HTML function and sets the return to finalHTML
-            const finalHTML = generateHTML(responses);
-           
-            // Calls the function to write the final file using the template string
-            writeToHTML(finalHTML);
-        })
-
-}
-
 askManagerQuestions();
 

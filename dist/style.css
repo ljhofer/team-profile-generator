@@ -2,7 +2,7 @@
 
 h1 {
     color: white;
-    background-color: #466d1d;
+    background-color: #5a753d;
     text-align: center;
     font-size: 90px;
     height: 150px;
@@ -23,7 +23,7 @@ main {
 
 .card-body {
     color: black;
-    background-color: #a8c28c;
+    background-color: #b5c4a4;
 }
 
 h3 {
@@ -33,5 +33,5 @@ h3 {
 
 h4 {
     font-size: medium;
-
 }
+
