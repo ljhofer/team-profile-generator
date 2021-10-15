@@ -174,7 +174,7 @@ function generateManagerHMTL(manager) {
     </div>
 </div>
 `
-    mainDiv.insertAdjacentHTML("beforeend", managerHTML);
+   
 
 }
 
