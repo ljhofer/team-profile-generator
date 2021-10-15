@@ -1,4 +1,3 @@
-// * `id`
 
 // * `email`
 
@@ -54,13 +53,18 @@ describe("Name", () => {
 });
 
 describe("ID", () => {
-
     it("Should contain numbers")
 
 
-
-
-
-
+    it("Should contain 4 characters")
 
 }) 
+
+
+describe("email", () => {
+    
+
+
+
+
+})
