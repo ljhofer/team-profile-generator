@@ -3,7 +3,7 @@ const Manager = require('../lib/Manager.js');
 
 
 describe("Manager", () => {
-    // This section tests the addition property in Manager
+    // This section tests the additional property in Manager
     describe("Properties", () => {
         it("Should match the office number that was inputted for the new Manager", () => {
             const manager = new Manager("Will", 1, "will@mail.com", 111);

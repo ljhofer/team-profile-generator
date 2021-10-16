@@ -3,6 +3,7 @@ const { it, expect } = require('@jest/globals');
 const Employee = require('../lib/Employee.js');
 
 describe("Employee", () => {
+    // This section tests the properties attached to Employee
     describe("Properties", () => {
         it("Should match the name that was inputted", () => {
             const employee = new Employee("Will", 1, "will@mail.com");
@@ -38,6 +39,7 @@ describe("Employee", () => {
         });
     })    
 
+    // This section tests the functions included in Employee
     describe("functions", () => {
         it("returns this employees name", () => {
             const employee = new Employee("Will", 1, "will@mail.com");
