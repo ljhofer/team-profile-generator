@@ -30,7 +30,7 @@ const managerQuestions = [
     {
         type: "input",
         message: "What is the team manager's office number?",
-        name: "managerOfficeNumber"
+        name: "officeNumber"
     },
     {
         type: "list",
@@ -60,7 +60,7 @@ const engineerQuestions = [
     {
         type: "input",
         message: "What is the engineer's GitHub username?",
-        name: "engineerGitHub"
+        name: "gitHub"
     },
     {
         type: "list",
@@ -90,7 +90,7 @@ const internQuestions = [
     {
         type: "input",
         message: "What is the intern's school name?",
-        name: "internSchool"
+        name: "schoolName"
     },
     {
         type: "list",
@@ -109,7 +109,7 @@ function askManagerQuestions() {
 
         .then(response => {
             // Instantiates a new manager and calls the function to write their HTML
-            const manager = new Manager (response);
+            const manager = new Manager (response.name, response.id, response.email, response.officeNumber);
             generateManagerHMTL(manager);
 
             if (response.role === "Engineer"){
@@ -129,7 +129,7 @@ function askEngineerQuestions() {
 
         .then(response => {
             // Instantiates a new engineer and calls the function to write their HTML
-            const engineer = new Engineer (response);
+            const engineer = new Engineer (response.name, response.id, response.email, response.gitHub);
             generateEngineerHTML(engineer);
             if (response.role === "Engineer"){
                 askEngineerQuestions();
@@ -148,7 +148,7 @@ function askInternQuestions() {
 
         .then(response => {
             // Instantiates a new intern and calls the function to write their HTML
-            const intern = new Intern (response);
+            const intern = new Intern (response.name, response.id, response.email, response.schoolName);
             generateInternHTML(intern);
             if (response.role === "Engineer"){
                 askEngineerQuestions();
