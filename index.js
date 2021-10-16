@@ -10,7 +10,7 @@ const Intern = require('./lib/intern');
 let finalHTML="";
 
 
-// TODO: An array of manager questions
+// An array of questions for managers
 const managerQuestions = [ 
     {
         type: "input",
@@ -40,6 +40,7 @@ const managerQuestions = [
     }
 ]
 
+// An array of questions for engineers
 const engineerQuestions = [ 
     {
         type: "input",
@@ -69,6 +70,7 @@ const engineerQuestions = [
     }
 ]
 
+// An array of questions for interns
 const internQuestions = [ 
     {
         type: "input",
@@ -100,12 +102,13 @@ const internQuestions = [
 ]
 
 
-// Prompts user with the initial question set for the manager and starts the app
+// Starts the app by prompting user with the initial question set for the manager, then offers to create an additional entry
 function askManagerQuestions() {
     inquirer
         .prompt(managerQuestions)
 
         .then(response => {
+            // Instantiates a new manager and calls the function to write their HTML
             const manager = new Manager (response);
             generateManagerHMTL(manager);
 
@@ -115,15 +118,17 @@ function askManagerQuestions() {
             else if (response.role === "Intern"){
                 askInternQuestions();
             }
-            else return          
+            else writeToHTML();         
         })
 }
 
+// Prompts user for information about the engineer, then offers to create another entry
 function askEngineerQuestions() {
     inquirer
         .prompt(engineerQuestions)
 
         .then(response => {
+            // Instantiates a new engineer and calls the function to write their HTML
             const engineer = new Engineer (response);
             generateEngineerHTML(engineer);
             if (response.role === "Engineer"){
@@ -136,11 +141,13 @@ function askEngineerQuestions() {
         })
 }
 
+// Prompts user for information about the intern, then offers to create another entry
 function askInternQuestions() {
     inquirer
         .prompt(internQuestions)
 
         .then(response => {
+            // Instantiates a new intern and calls the function to write their HTML
             const intern = new Intern (response);
             generateInternHTML(intern);
             if (response.role === "Engineer"){
@@ -190,7 +197,7 @@ function generateManagerHMTL(manager) {
             </div>
         </div>
 `
-        // Pushes managerHTML to final HTML
+        // Adds managerHTML to final HTML
         finalHTML += managerHTML;
 }
 
@@ -214,6 +221,7 @@ function generateEngineerHTML(engineer) {
             </div>
         </div>
 `
+    // Adds engineerHTML to final HTML
     finalHTML += engineerHTML; 
 }
 
@@ -237,10 +245,11 @@ function generateInternHTML(intern) {
             </div>
         </div>
 `
+     // Adds internHTML to final HTML
     finalHTML += internHTML;
 }
 
-// TODO: Function for writing responses to HTML
+// Writes the final HTML to the index.html file
 function writeToHTML() {
 
     let closingTags = `
@@ -256,6 +265,6 @@ function writeToHTML() {
 }
 
 
-// TODO: Function to initialize app, calls questions, and gets responses
+// Initialize app by calling the first set of questions
 askManagerQuestions();
 
